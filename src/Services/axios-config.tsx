@@ -2,8 +2,10 @@
 /* eslint-disable no-unused-expressions */
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import { logout } from './Auth/Login';
+import userSubjectBehavior from './Auth/Login/_userSubject';
 
 import authHeader from './Helpers/authHeader';
+
 
 const api = (): AxiosInstance => {
   const jwtToken = authHeader();
@@ -22,6 +24,9 @@ const api = (): AxiosInstance => {
     // eslint-disable-next-line no-param-reassign
     config.headers.Authorization = jwtToken.Authorization;
 
+    console.log(config);
+    // userSubjectBehavior.createUserSubject(jwtToken.Authorization);
+    
     return config;
   });
 

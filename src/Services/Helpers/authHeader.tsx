@@ -1,13 +1,12 @@
 import isLogged from '../Auth/Login/_isLogged';
 import userSubjectBehavior from '../Auth/Login/_userSubject';
-// eslint-disable-next-line import/no-cycle
 
 const authHeader = () => {
-  const curentUser = userSubjectBehavior.curentUserValue();
+  // return authorization header with jwt token
+  const currentUser = userSubjectBehavior.currentUserValue();
   if (isLogged()) {
-    return { Authorization: `Bearer ${curentUser}` };
+    return { Authorization: `Bearer ${currentUser}` };
   }
-  return { Authorization: ` ${curentUser}` };
+  return { Authorization: '' };
 };
-
 export default authHeader;

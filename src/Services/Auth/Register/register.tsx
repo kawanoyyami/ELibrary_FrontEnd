@@ -10,7 +10,11 @@ const register = async (values: IRegisterRequest): Promise<any> => {
   const queryJSON = { fullname, ...parsedValues };
 
   const data = await api().post(`/Auth/register`, queryJSON);
-  console.log(data);
+
+  //   @TODO remove this
+  console.log(data); 
+  console.log(queryJSON); 
+
   throwIfError(data);
 };
 

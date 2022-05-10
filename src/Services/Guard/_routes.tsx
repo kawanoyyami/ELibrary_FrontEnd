@@ -1,3 +1,4 @@
+import AllBooks from '../../Pages/AllBooks';
 import Home from '../../Pages/Home';
 import NotFound from '../../Pages/NotFound';
 import SignUp from '../../Pages/SignUp';
@@ -10,8 +11,8 @@ export default () => [
     component: Home,
     error: 'Custom error for home page',
     meta: {
-        authOnly: true,
-      }
+      authOnly: true
+    }
   },
   {
     path: '/SignUp',
@@ -30,7 +31,15 @@ export default () => [
     }
   },
   {
-    path: '*',
+    path: '/AllBooks',
+    exact: true,
+    component: AllBooks,
+    meta: {
+      authOnly: true,
+    }
+  },
+  {
+    path: '/*',
     component: NotFound,
     ignoreGlobal: true,
     meta: {

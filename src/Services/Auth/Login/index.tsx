@@ -14,7 +14,10 @@ export const login = async (values: ILogin): Promise<any> => {
 
   throwCustomException(result);
 
-  const token = (result as IJWToken) || '';
+  const token = (result as IJWToken);
 
-  userSubjectBehavior.createUserSubject(token as string);
+  console.log(result);
+
+  if(token != null)
+  userSubjectBehavior.createUserSubject(token.token);
 };
