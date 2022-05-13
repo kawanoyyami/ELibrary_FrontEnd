@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(4),
     },
     cardGrid: {
-      paddingTop: theme.spacing(8),
+      paddingTop: theme.spacing(1),
       paddingBottom: theme.spacing(8),
     },
     card: {
@@ -34,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
     pagination:{
         marginTop: theme.spacing(2),
       justifyContent:"center",
-      display:'flex'
+      display:'flex',
+      paddingTop: theme.spacing(3),
+      paddingBottom: theme.spacing(3),
     }
   }));
 

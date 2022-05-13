@@ -18,6 +18,7 @@ export interface IBookCreate {
   isFree: boolean;
   imagePath: string;
   description: string;
+  amazonLink:string;
 }
 
 export interface IBookUpdate {
@@ -27,6 +28,7 @@ export interface IBookUpdate {
   isFree: boolean;
   imagePath: string;
   description: string;
+  amazonLink:string;
 }
 
 export interface IBookResponseWithAuthor {

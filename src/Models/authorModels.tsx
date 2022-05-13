@@ -11,4 +11,5 @@ export interface IBookResponse {
     isFree: boolean;
     imagePath: string;
     description: string;
+    amazonLink:string;
   }
