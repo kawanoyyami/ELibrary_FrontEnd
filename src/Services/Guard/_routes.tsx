@@ -1,8 +1,14 @@
-import AllBooks from '../../Pages/AllBooks';
+import SearchBook from '../../Pages/AllBooks';
+import Authors from '../../Pages/Authors';
+import Books from '../../Pages/Books';
 import Home from '../../Pages/Home';
 import NotFound from '../../Pages/NotFound';
+import Profile from '../../Pages/Profile';
+import Projects from '../../Pages/Projects';
+import Reports from '../../Pages/Reports';
 import SignUp from '../../Pages/SignUp';
 import SignIn from '../../Pages/SingIn.tsx';
+import Subscription from '../../Pages/Subscription';
 
 export default () => [
   {
@@ -31,9 +37,57 @@ export default () => [
     }
   },
   {
-    path: '/AllBooks',
+    path: '/SearchBook',
     exact: true,
-    component: AllBooks,
+    component: SearchBook,
+    meta: {
+      authOnly: true,
+    }
+  },
+  {
+    path: '/Profile',
+    exact: true,
+    component: Profile,
+    meta: {
+      authOnly: true,
+    }
+  },
+  {
+    path: '/Projects',
+    exact: true,
+    component: Projects,
+    meta: {
+      authOnly: true,
+    }
+  },
+  {
+    path: '/Auhtors',
+    exact: true,
+    component: Authors,
+    meta: {
+      authOnly: true,
+    }
+  },
+  {
+    path: '/Books',
+    exact: true,
+    component: Books,
+    meta: {
+      authOnly: true,
+    }
+  },
+  {
+    path: '/Reports',
+    exact: true,
+    component: Reports,
+    meta: {
+      authOnly: true,
+    }
+  },
+  {
+    path: '/Subscription',
+    exact: true,
+    component: Subscription,
     meta: {
       authOnly: true,
     }

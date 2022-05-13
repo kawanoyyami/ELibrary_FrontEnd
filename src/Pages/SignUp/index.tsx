@@ -8,16 +8,17 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import { Formik, Field, Form } from 'formik';
 import {  useSnackbar } from 'notistack';
-import {Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
+import { ThemeProvider } from '@material-ui/core/styles';
 import { registerSchema } from '../../Models/authModels';
-import isLogged from '../../Services/Auth/Login/_isLogged';
 import Copyright from '../../Components/Footer';
 import useStyles from './_style';
 import register from '../../Services/Auth/Register/register';
-
+import theme from '../../Components/Theme/theme';
 
 
 export default function SignUp() {
@@ -26,7 +27,11 @@ export default function SignUp() {
   const history = useHistory();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <ThemeProvider theme={theme}>
+    <Grid container component="main" className={classes.root}>
+    <CssBaseline />
+    <Grid item xs={false} sm={4} md={7} className={classes.image} />
+    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -34,6 +39,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        <div className={classes.form}>
         <Formik
           validationSchema={registerSchema}
           initialValues={{
@@ -59,8 +65,6 @@ export default function SignUp() {
         >
           {(props) => (
             <Form onSubmit={props.handleSubmit}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
                   <Field
                     component={TextField}
                     autoComplete="fname"
@@ -70,13 +74,12 @@ export default function SignUp() {
                     fullWidth
                     id="firstName"
                     label="First Name"
-                    autoFocus
+                    
                   />
-                </Grid>
-                <Grid item xs={12} sm={6}>
                   <Field
                     component={TextField}
                     variant="outlined"
+                    margin="normal"
                     required
                     fullWidth
                     id="lastName"
@@ -84,11 +87,10 @@ export default function SignUp() {
                     name="lastName"
                     autoComplete="lname"
                   />
-                </Grid>
-                <Grid item xs={12}>
                   <Field
                     component={TextField}
                     variant="outlined"
+                    margin="normal"
                     required
                     fullWidth
                     id="email"
@@ -96,11 +98,10 @@ export default function SignUp() {
                     name="email"
                     autoComplete="email"
                   />
-                </Grid>
-                <Grid item xs={12}>
                   <Field
                     component={TextField}
                     variant="outlined"
+                    margin="normal"
                     required
                     fullWidth
                     id="userName"
@@ -108,11 +109,10 @@ export default function SignUp() {
                     name="userName"
                     autoComplete="userName"
                   />
-                </Grid>
-                <Grid item xs={12}>
                   <Field
                     component={TextField}
                     variant="outlined"
+                    margin="normal"
                     required
                     fullWidth
                     name="password"
@@ -121,11 +121,10 @@ export default function SignUp() {
                     id="password"
                     autoComplete="current-password"
                   />
-                </Grid>
-                <Grid item xs={12}>
                   <Field
                     component={TextField}
                     variant="outlined"
+                    margin="normal"
                     required
                     fullWidth
                     name="confirmPassword"
@@ -134,9 +133,6 @@ export default function SignUp() {
                     id="confirmPassword"
                     autoComplete="confirmPassword"
                   />
-                </Grid>
-              </Grid>
-
               <Button
                 type="submit"
                 fullWidth
@@ -149,6 +145,7 @@ export default function SignUp() {
             </Form>
           )}
         </Formik>
+        
         <Grid container justify="flex-end">
           <Grid item>
             <Link href="/SignIn" variant="body2">
@@ -157,9 +154,12 @@ export default function SignUp() {
           </Grid>
         </Grid>
       </div>
+      </div>
       <Box mt={5}>
         <Copyright />
       </Box>
-    </Container>
+      </Grid>
+    </Grid>
+    </ThemeProvider>
   );
 }
