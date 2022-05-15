@@ -9,9 +9,13 @@ import Typography from '@material-ui/core/Typography';
 import React, { useEffect, useState } from 'react';
 import ShowMoreText from 'react-show-more-text';
 import Pagination from '@material-ui/lab/Pagination';
+import IconButton from '@material-ui/core/IconButton';
+import PageviewIcon from '@material-ui/icons/Pageview';
+import EditIcon from '@material-ui/icons/Edit';
 import { IBookResponsePaginated } from '../../Models/bookModels';
 import { getBooksPaginated } from '../../Services/Books';
 import useStyles from './_style';
+import EditBookModal from './EditBookModal';
 
 export default function BooksLayout(): JSX.Element {
   const classes = useStyles();
@@ -42,12 +46,12 @@ export default function BooksLayout(): JSX.Element {
   });
 
   const count = Math.ceil(books.total / 9);
-  useEffect(() => {
-    getBooksPaginated({
-      pageIndex: page,
-      pageSize: 9,
-    }).then((v) => setBooks(v as IBookResponsePaginated));
-  }, [page + 1]);
+  // useEffect(() => {
+  //   getBooksPaginated({
+  //     pageIndex: page,
+  //     pageSize: 9,
+  //   }).then((v) => setBooks(v as IBookResponsePaginated));
+  // }, [page + 1]);
 
   return (
     <Container className={classes.cardGrid} maxWidth="md">
@@ -93,9 +97,17 @@ export default function BooksLayout(): JSX.Element {
                 </ShowMoreText>
               </CardContent>
               <CardActions>
-                <Button size="small" color="primary">
-                  View
-                </Button>
+                <IconButton 
+                color="inherit"
+                // onClick={handleDrawerOpen}
+                  // className={clsx(
+                  //   classes.menuButton,
+                  //   open && classes.menuButtonHidden
+                  // )}
+                  >
+                  <PageviewIcon/>
+                </IconButton>
+                <EditBookModal/>
               </CardActions>
             </Card>
           </Grid>

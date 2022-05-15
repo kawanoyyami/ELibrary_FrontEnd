@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
@@ -5,9 +6,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import {
   Badge,
+  Box,
   Button,
   Divider,
   Drawer,
+  Grid,
   IconButton,
   List,
   Typography,
@@ -16,9 +19,14 @@ import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import { useHistory } from 'react-router';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import useStyles from './_styles';
 import { logout } from '../../Services/Auth/Login';
 import { mainListItems, secondaryListItems } from './menu';
@@ -38,6 +46,15 @@ export default function Layout(props: Props): JSX.Element {
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -64,22 +81,44 @@ export default function Layout(props: Props): JSX.Element {
             variant="h6"
             color="inherit"
             noWrap
-            className={classes.title}
+            className={clsx(classes.title, open && classes.titleHidden)}
           >
             ELibrary
           </Typography>
-          <Button
-            color="inherit"
-            onClick={() => {
-              logout();
-              history.push('/SignIn');
-            }}
-          >
-            <ExitToAppIcon />
-            <Typography color="inherit" noWrap>
-              Log out
-            </Typography>
-          </Button>
+          <div className={classes.exitButton}>
+            <InputBase className={classes.search}
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={() => {
+                history.push('/Profile');
+              }}>My account</MenuItem>
+              <MenuItem onClick={() => {
+                logout();
+                history.push('/SignIn');
+              }}>Logout</MenuItem>
+            </Menu>
+            <Button
+              color="inherit"
+              onClick={handleClick}
+            >
+              <AccountCircleIcon />
+            </Button>
+          </div>
+
+
         </Toolbar>
       </AppBar>
       <Drawer

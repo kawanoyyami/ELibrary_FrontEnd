@@ -1,3 +1,5 @@
+/* eslint-disable func-names */
+import * as Yup from 'yup';
 import { IBookResponse } from "./authorModels";
 
 export interface IBookResponsePaginated {
@@ -18,7 +20,7 @@ export interface IBookCreate {
   isFree: boolean;
   imagePath: string;
   description: string;
-  amazonLink:string;
+  amazonLink: string;
 }
 
 export interface IBookUpdate {
@@ -28,7 +30,7 @@ export interface IBookUpdate {
   isFree: boolean;
   imagePath: string;
   description: string;
-  amazonLink:string;
+  amazonLink: string;
 }
 
 export interface IBookResponseWithAuthor {
@@ -37,9 +39,16 @@ export interface IBookResponseWithAuthor {
   authors: IAuthorResponse[];
 }
 
-export interface IAuthorResponse{
-  id:number;
-  fullName:string;
-  dob:Date;
-  areaOfInteresnt:string;
+export interface IAuthorResponse {
+  id: number;
+  fullName: string;
+  dob: Date;
+  areaOfInteresnt: string;
 }
+
+export const bookAddSchema = Yup.object().shape({
+  title: Yup.string().required('Please enter book title'),
+  description: Yup.string().required('Please enter book description'),
+  imageName: Yup.string().required('Please add book image'),
+  imageSrc: Yup.string().required('Please add book image')
+});
