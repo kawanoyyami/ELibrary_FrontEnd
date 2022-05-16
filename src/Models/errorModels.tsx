@@ -1,4 +1,4 @@
-export default interface IErrorResponse{
-    error?:string;
-    statusText?:string;
+export default interface IErrorResponse {
+  error?: { Message: string };
+  statusText?: string;
 }

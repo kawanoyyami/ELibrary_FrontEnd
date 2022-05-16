@@ -15,17 +15,17 @@ export const registerSchema = Yup.object().shape({
   lastName: Yup.string().required('Please enter last name'),
   userName: Yup.string().required('Please enter username'),
   email: Yup.string().email().required('Please enter email address'),
-  password: Yup.string().required(),
+  password: Yup.string().required().min(8).max(32),
   // .matches(
   //   /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
   //   'Password must contain at least 8 characters, one uppercase, one number and one special case character'
   // ),
   confirmPassword: Yup.string()
-    .required('Please confirm your password')
+    .required('Please confirm your password').min(8).max(32)
     .oneOf([Yup.ref('password'), null], "Passwords don't match.")
     .test('password-match', 'Password must match', function (value): boolean {
       return this.parent.password === value;
-    })
+    }),
 });
 
 export interface ILogin {
@@ -43,6 +43,7 @@ export interface IRegisterRequest {
 
 export interface IJWToken {
   token?: string;
-  error?: string;
+  error?: { Message: string }
   statusText?: string;
+  Message?: string;
 }

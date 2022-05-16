@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -46,12 +48,13 @@ export default function BooksLayout(): JSX.Element {
   });
 
   const count = Math.ceil(books.total / 9);
-  // useEffect(() => {
-  //   getBooksPaginated({
-  //     pageIndex: page,
-  //     pageSize: 9,
-  //   }).then((v) => setBooks(v as IBookResponsePaginated));
-  // }, [page + 1]);
+
+  useEffect(() => {
+    getBooksPaginated({
+      pageIndex: page,
+      pageSize: 9,
+    }).then((v) => setBooks(v as IBookResponsePaginated));
+  }, [page + 1]);
 
   return (
     <Container className={classes.cardGrid} maxWidth="md">
@@ -97,17 +100,17 @@ export default function BooksLayout(): JSX.Element {
                 </ShowMoreText>
               </CardContent>
               <CardActions>
-                <IconButton 
-                color="inherit"
-                // onClick={handleDrawerOpen}
+                <IconButton
+                  color="inherit"
+                  // onClick={handleDrawerOpen}
                   // className={clsx(
                   //   classes.menuButton,
                   //   open && classes.menuButtonHidden
                   // )}
-                  >
-                  <PageviewIcon/>
+                >
+                  <PageviewIcon />
                 </IconButton>
-                <EditBookModal/>
+                <EditBookModal />
               </CardActions>
             </Card>
           </Grid>

@@ -14,8 +14,7 @@ import { getBooksPaginated } from '../../../Services/Books';
 import EnhancedTableHead from '../TableHead';
 import TransitionsModal from '../AddBookModal';
 
-
-export default function EnhancedTable():JSX.Element {
+export default function EnhancedTable(): JSX.Element {
   const classes = useStyles();
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
@@ -37,12 +36,12 @@ export default function EnhancedTable():JSX.Element {
     ],
   });
 
-  // useEffect(() => {
-  //   getBooksPaginated({
-  //     pageIndex: page,
-  //     pageSize: rowsPerPage,
-  //   }).then((v) => setBooks(v as IBookResponsePaginated));
-  // }, [rowsPerPage, page]);
+  useEffect(() => {
+    getBooksPaginated({
+      pageIndex: page,
+      pageSize: rowsPerPage,
+    }).then((v) => setBooks(v as IBookResponsePaginated));
+  }, [rowsPerPage, page]);
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -149,7 +148,7 @@ export default function EnhancedTable():JSX.Element {
         />
       </Paper>
       <div className={classes.bookButton}>
-      <TransitionsModal/>
+        <TransitionsModal />
       </div>
     </div>
   );

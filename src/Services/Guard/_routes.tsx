@@ -15,7 +15,7 @@ export default () => [
     component: Home,
     error: 'Custom error for home page',
     meta: {
-      noAuth: true
+      authOnly: true
     }
   },
   {
@@ -39,7 +39,7 @@ export default () => [
     exact: true,
     component: SearchBook,
     meta: {
-      noAuth: true,
+      authOnly: true,
     }
   },
   {
@@ -47,7 +47,7 @@ export default () => [
     exact: true,
     component: Profile,
     meta: {
-      noAuth: true,
+      authOnly: true,
     }
   },
   {
@@ -55,7 +55,7 @@ export default () => [
     exact: true,
     component: Authors,
     meta: {
-      noAuth: true,
+      authOnly: true,
     }
   },
   {
@@ -63,7 +63,7 @@ export default () => [
     exact: true,
     component: Books,
     meta: {
-      noAuth: true,
+      authOnly: true,
     }
   },
   {
@@ -71,7 +71,7 @@ export default () => [
     exact: true,
     component: Subscription,
     meta: {
-      noAuth: true,
+      authOnly: true,
     }
   },
   {
@@ -79,7 +79,7 @@ export default () => [
     component: NotFound,
     ignoreGlobal: true,
     meta: {
-      noAuth: true,
+      authOnly: true,
     }
   },
 ];
