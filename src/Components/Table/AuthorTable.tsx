@@ -26,7 +26,7 @@ export default function AuthorTable(): JSX.Element {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const [searchId, setSerachId] = useState<{ id: number; title: string }>({
-    id: 1,
+    id: 11,
     title: '',
   });
   const [authors, setAuthors] = useState<IBookResponseWithAuthor>({
