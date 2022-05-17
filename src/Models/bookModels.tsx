@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
 import * as Yup from 'yup';
-import { IBookResponse } from "./authorModels";
+import { IBookResponse } from './authorModels';
 
 export interface IBookResponsePaginated {
   pageIndex: number;
@@ -12,7 +12,6 @@ export interface IPaginatedRequest {
   pageIndex: number;
   pageSize: number;
 }
-
 
 export interface IBookCreate {
   title: string;
@@ -48,7 +47,7 @@ export interface IAuthorResponse {
 
 export const bookAddSchema = Yup.object().shape({
   title: Yup.string().required('Please enter book title'),
+  pageCount: Yup.string().required('Please enter number of pages'),
   description: Yup.string().required('Please enter book description'),
-  imageName: Yup.string().required('Please add book image'),
-  imageSrc: Yup.string().required('Please add book image')
+  amazonLink: Yup.string().required('Please enter Link to amazon books'),
 });

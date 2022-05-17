@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/ban-types */
 import userSubjectBehavior from './_userSubject';
@@ -16,7 +18,7 @@ export const login = async (values: ILogin): Promise<any> => {
 
   const token = (result as IJWToken);
 
-  console.log(result);
+  // console.log(result);
 
   if(token != null)
   userSubjectBehavior.createUserSubject(token.token);

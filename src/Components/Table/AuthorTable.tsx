@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -26,7 +28,7 @@ export default function AuthorTable(): JSX.Element {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const [searchId, setSerachId] = useState<{ id: number; title: string }>({
-    id: 11,
+    id: 10,
     title: '',
   });
   const [authors, setAuthors] = useState<IBookResponseWithAuthor>({

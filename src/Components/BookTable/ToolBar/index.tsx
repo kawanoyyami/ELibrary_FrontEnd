@@ -15,7 +15,9 @@ interface EnhancedTableToolbarProps {
   numSelected: number;
 }
 
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
+const EnhancedTableToolbar = (
+  props: EnhancedTableToolbarProps
+): JSX.Element => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
   const { enqueueSnackbar } = useSnackbar();
@@ -56,7 +58,6 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
                   variant: 'success',
                 });
               } catch (error) {
-                console.log(error);
                 enqueueSnackbar(error.toString(), { variant: 'error' });
               }
             }}

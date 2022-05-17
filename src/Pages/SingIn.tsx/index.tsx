@@ -105,12 +105,12 @@ const SignIn = function (): JSX.Element {
           </Formik>
           <Grid container>
             <Grid item xs>
-              <Link href="/forgot-password" variant="body2">
+              <Link href="/forgot-password" variant="body2" className={classes.text}>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/SignUp" variant="body2">
+              <Link href="/SignUp" variant="body2" className={classes.text}>
                 {"Don't have an account? Sign up!"}
               </Link>
             </Grid>

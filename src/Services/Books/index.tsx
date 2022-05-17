@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable no-console */
 import { IBookResponse } from '../../Models/authorModels';
 import IErrorResponse from '../../Models/errorModels';
 import api from '../axios-config';

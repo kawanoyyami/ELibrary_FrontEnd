@@ -7,8 +7,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import SaveIcon from '@material-ui/icons/Save';
 import { Field } from 'formik';
-import { TextField } from 'formik-material-ui';
-import { TextField as MaterialTextField, Divider } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
 import { IUserResponse } from '../../Models/userModels';
 import { getUserId } from '../../Services/Auth/SessionParser';
 import { getUserProps } from '../../Services/Users';
@@ -16,6 +15,7 @@ import { getUserProps } from '../../Services/Users';
 const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
+    background: '#e55600',
   },
   root: {
     '& .MuiTextField-root': {
@@ -23,16 +23,16 @@ const useStyles = makeStyles((theme) => ({
       width: '35ch',
     },
   },
-  item:{
-    flex:"50%",
-    maxWidth:"50%"
+  item: {
+    flex: '50%',
+    maxWidth: '50%',
   },
-  row:{
-    display:"flex",
-  }
+  row: {
+    display: 'flex',
+  },
 }));
 
-export default function Profile() {
+export default function Profile():JSX.Element {
   const classes = useStyles();
   const [user, setUser] = useState<IUserResponse>({
     fullName: '',
@@ -42,7 +42,6 @@ export default function Profile() {
   });
 
   useEffect(() => {
-    console.log(getUserId(), 'd');
     getUserProps(getUserId()).then((v) => setUser(v as IUserResponse));
   }, []);
 
@@ -58,23 +57,23 @@ export default function Profile() {
           >
             <Box sx={{ fontWeight: 'bold' }}>User Profile</Box>
           </Typography>
-        </Container >
-        <Container >
+        </Container>
+        <Container>
           <Grid container spacing={3} className={classes.row}>
             <Grid item xs sm={4}>
-            <Field 
+              <Field
                 component={TextField}
                 variant="standard"
                 fullWidth
                 values={user.fullName}
                 id="fullname"
                 label={user.fullName}
-                name='fullname'
+                name="fullname"
                 autoComplete={user.fullName}
               />
             </Grid>
             <Grid item xs sm={4}>
-            <Field
+              <Field
                 component={TextField}
                 variant="standard"
                 fullWidth

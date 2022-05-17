@@ -26,6 +26,8 @@ const useStyles = makeStyles((theme: Theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    background:
+      '#e55600',
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -34,6 +36,8 @@ const useStyles = makeStyles((theme: Theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    background:
+      '#e55600',
     
   },
   menuButton: {
@@ -133,6 +137,10 @@ const useStyles = makeStyles((theme: Theme) => ({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    menuText:{
+      flexGrow: 1,
+      padding: theme.spacing(0, 1,1),
+    }
 }));
 
 export default useStyles;

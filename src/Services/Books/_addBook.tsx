@@ -1,9 +1,8 @@
-import { IBookCreate } from '../../Models/bookModels';
 import api from '../axios-config';
 import { throwIfError } from '../Helpers/throwCustomException';
 
-const addBook = async (bookCreate: IBookCreate): Promise<boolean> => {
-  const result = await api().post(`/Book/add`, bookCreate);
+const addBook = async (formData: FormData): Promise<boolean> => {
+  const result = await api().post(`/Book/add`, formData);
 
   throwIfError(result);
 

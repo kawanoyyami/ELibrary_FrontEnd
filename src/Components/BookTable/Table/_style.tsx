@@ -29,6 +29,7 @@ createStyles({
     flex: '1 1 100%',
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(2),
+    
   },
 
 }),

@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(1),
         },
         submit: {
-            margin: theme.spacing(3, 0, 2),
+            margin: theme.spacing(1, 0, 0),
+            background: '#e55600',
           },
     }),
 );

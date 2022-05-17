@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/prop-types */
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -13,11 +14,12 @@ import ShowMoreText from 'react-show-more-text';
 import Pagination from '@material-ui/lab/Pagination';
 import IconButton from '@material-ui/core/IconButton';
 import PageviewIcon from '@material-ui/icons/Pageview';
-import EditIcon from '@material-ui/icons/Edit';
 import { IBookResponsePaginated } from '../../Models/bookModels';
 import { getBooksPaginated } from '../../Services/Books';
 import useStyles from './_style';
 import EditBookModal from './EditBookModal';
+import { isAdmin } from '../../Services/Auth/SessionParser';
+import DeleteBook from '../DeleteBook';
 
 export default function BooksLayout(): JSX.Element {
   const classes = useStyles();
@@ -40,7 +42,7 @@ export default function BooksLayout(): JSX.Element {
         id: 0,
         title: '',
         isFree: false,
-        imagePath: '',
+        imagePath: 'default.png',
         description: '',
         amazonLink: '',
       },
@@ -76,7 +78,7 @@ export default function BooksLayout(): JSX.Element {
             <Card className={classes.card}>
               <CardMedia
                 className={classes.cardMedia}
-                image={book.imagePath}
+                image={`https://localhost:7001/Resources/bookimages/${book.imagePath}`}
                 title={book.title}
               />
               <CardContent className={classes.cardContent}>
@@ -102,15 +104,11 @@ export default function BooksLayout(): JSX.Element {
               <CardActions>
                 <IconButton
                   color="inherit"
-                  // onClick={handleDrawerOpen}
-                  // className={clsx(
-                  //   classes.menuButton,
-                  //   open && classes.menuButtonHidden
-                  // )}
                 >
                   <PageviewIcon />
                 </IconButton>
-                <EditBookModal />
+                {isAdmin() ? <EditBookModal curentbookid={book.id} /> : '' }
+                {isAdmin() ? <DeleteBook curentIdBook={book.id} /> : '' }
               </CardActions>
             </Card>
           </Grid>
@@ -127,7 +125,4 @@ export default function BooksLayout(): JSX.Element {
       </div>
     </Container>
   );
-}
-function useNavigate() {
-  throw new Error('Function not implemented.');
 }

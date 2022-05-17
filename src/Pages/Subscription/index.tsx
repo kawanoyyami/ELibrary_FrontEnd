@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Grid, Paper, Typography } from '@material-ui/core';
+import { Grid, Paper} from '@material-ui/core';
 import React from 'react';
 import LibraryLayout from '../../Components/Layout';
 import StripeContainer from '../../Components/Stripe';

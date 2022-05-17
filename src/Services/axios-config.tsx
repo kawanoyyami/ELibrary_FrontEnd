@@ -1,10 +1,9 @@
+/* eslint-disable no-console */
 /* eslint-disable no-else-return */
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-unused-expressions */
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import { logout } from './Auth/Login';
-import userSubjectBehavior from './Auth/Login/_userSubject';
-
 import authHeader from './Helpers/authHeader';
 
 const api = (): AxiosInstance => {
@@ -14,7 +13,7 @@ const api = (): AxiosInstance => {
 
   const instance = axios.create({
     baseURL: 'https://localhost:7001/',
-    timeout: 5000,
+    timeout: 360000,
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
@@ -33,15 +32,12 @@ const api = (): AxiosInstance => {
   instance.interceptors.response.use(
     (response: AxiosResponse) => response.data, // JSON.parse(response.data),
     (reason: AxiosError) => {
-      if ([401, 403].indexOf(reason?.response?.status || 0) !== -1) logout();
-      console.log(reason.response?.status);
-
-      // refreshAccessToken 
+      // refreshAccessToken
       const originalRequest = reason.config;
       if (
         reason.response.data.code === 'token_not_valid' &&
         reason.response.status === 401 &&
-        reason.response.statusText === 'Unauthorized'
+        403
       ) {
         const refreshToken = localStorage.getItem('refresh_token');
 
@@ -76,6 +72,10 @@ const api = (): AxiosInstance => {
           window.location.href = '/SignIn/';
         }
       }
+
+      if ([401, 403].indexOf(reason?.response?.status || 0) !== -1) logout();
+      // console.log(reason.response?.status);
+
       return {
         error: reason.response?.data || 'your input is not good',
         statusText: reason.response?.statusText,

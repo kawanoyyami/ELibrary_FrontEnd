@@ -1,4 +1,4 @@
-import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
+import {  makeStyles } from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     backgroundImage:
-      'url(https://localhost:7001//background/background.jpg)',
+      'url(https://localhost:7001/Resources/background/background.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light'

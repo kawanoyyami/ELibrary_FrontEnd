@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import isLogged from '../Auth/Login/_isLogged';
 import userSubjectBehavior from '../Auth/Login/_userSubject';
 
