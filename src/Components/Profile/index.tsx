@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -6,16 +8,16 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import SaveIcon from '@material-ui/icons/Save';
-import { Field } from 'formik';
 import TextField from '@material-ui/core/TextField';
-import { IUserResponse } from '../../Models/userModels';
+import { Field, Form, Formik, useFormik } from 'formik';
+import { useSnackbar } from 'notistack';
+import { IUserResponse, UserUpdate } from '../../Models/userModels';
 import { getUserId } from '../../Services/Auth/SessionParser';
-import { getUserProps } from '../../Services/Users';
+import { getUserProps, updateUser } from '../../Services/Users';
 
 const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
-    background: '#e55600',
   },
   root: {
     '& .MuiTextField-root': {
@@ -32,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Profile():JSX.Element {
+export default function Profile(): JSX.Element {
   const classes = useStyles();
   const [user, setUser] = useState<IUserResponse>({
     fullName: '',
@@ -40,6 +42,7 @@ export default function Profile():JSX.Element {
     email: '',
     phone: '',
   });
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     getUserProps(getUserId()).then((v) => setUser(v as IUserResponse));
@@ -59,54 +62,79 @@ export default function Profile():JSX.Element {
           </Typography>
         </Container>
         <Container>
-          <Grid container spacing={3} className={classes.row}>
-            <Grid item xs sm={4}>
-              <Field
-                component={TextField}
-                variant="standard"
-                fullWidth
-                values={user.fullName}
-                id="fullname"
-                label={user.fullName}
-                name="fullname"
-                autoComplete={user.fullName}
-              />
-            </Grid>
-            <Grid item xs sm={4}>
-              <Field
-                component={TextField}
-                variant="standard"
-                fullWidth
-                id="email"
-                values={user.email}
-                label={user.email}
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs sm={4}>
-              <Field
-                component={TextField}
-                variant="standard"
-                fullWidth
-                id="userName"
-                label={user.userName}
-                name="userName"
-                autoComplete={user.userName}
-              />
-            </Grid>
-          </Grid>
-          <Box textAlign="left">
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              startIcon={<SaveIcon />}
-              className={classes.submit}
-            >
-              Save
-            </Button>
-          </Box>
+          <Formik
+            validationSchema={UserUpdate}
+            initialValues={{
+              userName: `${user.userName}`,
+              fullname: `${user.fullName}`,
+              email: `${user.email}`,
+            }}
+            onSubmit={async (values) => {
+              try {
+                await updateUser({
+                  id: getUserId(),
+                  userName: values.userName,
+                  fullName: values.fullname,
+                  email: values.email,
+                });
+              } catch (e) {
+                enqueueSnackbar(e.toString(), {
+                  variant: 'error',
+                });
+              }
+            }}
+          >
+            {(props) => (
+              <Form onSubmit={props.handleSubmit}>
+                <Grid container spacing={3} className={classes.row}>
+                  <Grid item xs sm={4}>
+                    <Field
+                      component={TextField}
+                      name="userName"
+                      variant="outlined"
+                      value={props.values.userName}
+                      required
+                      fullWidth
+                      id="userName"
+                      label="Username"
+                    />
+                  </Grid>
+                  <Grid item xs sm={4}>
+                    <Field
+                      component={TextField}
+                      name="fullname"
+                      variant="outlined"
+                      fullWidth
+                      id="fullname"
+                      label="Full Name"
+                    />
+                  </Grid>
+                  <Grid item xs sm={4}>
+                    <Field
+                      component={TextField}
+                      variant="outlined"
+                      fullWidth
+                      id="email"
+                      label="Email"
+                      name="email"
+                      autoComplete="email"
+                    />
+                  </Grid>
+                </Grid>
+                <Box textAlign="left">
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    startIcon={<SaveIcon />}
+                    className={classes.submit}
+                  >
+                    Save
+                  </Button>
+                </Box>
+              </Form>
+            )}
+          </Formik>
         </Container>
       </Container>
     </div>

@@ -45,7 +45,7 @@ export default function AuthorTable(): JSX.Element {
   });
 
   const [books, setBooks] = useState<IBookResponse[]>([
-    { id: 0, title: '', isFree: false, imagePath: '', description: '',amazonLink:'' },
+    { id: 0, title: '', isFree: false, imagePath: '', description: '',amazonLink:'',bookName:'' },
   ]);
 
   useEffect(() => {

@@ -21,9 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
     submit: {
       margin: theme.spacing(1, 0, 0),
     },
-    fields: {
-      // width: '50%',
-    },
   })
 );
 export default useStyles;

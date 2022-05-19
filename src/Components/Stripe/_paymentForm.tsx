@@ -1,87 +1,94 @@
-/* eslint-disable react/button-has-type */
-import React, { useState } from 'react';
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { StripeCardElementOptions } from '@stripe/stripe-js';
-import { getUserId } from '../../Services/Auth/SessionParser';
-import api from '../../Services/axios-config';
+import React, { useState, useEffect } from 'react';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Container from '@material-ui/core/Container/Container';
+import Grid from '@material-ui/core/Grid/Grid';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import PaymentIcon from '@material-ui/icons/Payment';
+import { Stripe } from '@stripe/stripe-js';
+import { useElements } from '@stripe/react-stripe-js';
+import useStyles from './_style';
+import { IProductResponse, ISesionResponse } from '../../Models/paymentModels';
+import { getProducs, getSesionId } from '../../Services/Products';
 
-const CARD_OPTIONS: StripeCardElementOptions = {
-  iconStyle: 'solid',
-  style: {
-    base: {
-      iconColor: '#c4f0ff',
-      color: 'black',
-      fontWeight: 500,
-      fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-      fontSize: '16px',
-      fontSmoothing: 'antialiased',
-      ':-webkit-autofill': { color: '#fce883' },
-      '::placeholder': { color: '#87bbfd' },
+export default function ProductDisplay(props: {
+  stripe: Promise<Stripe>;
+}): JSX.Element {
+  const classes = useStyles();
+
+
+  const [sesion, setSession] = useState<ISesionResponse>({ sessionId: '' });
+  const [producs, setProducs] = useState<IProductResponse[]>([
+    {
+      id: '',
+      name: '',
+      description: '',
+      images: '',
+      defaultPriceId: '',
+      defaultPrice: { unitAmount: 0 },
     },
-    invalid: {
-      iconColor: 'black',
-      color: 'black',
-    },
-  },
-};
+  ]);
 
-async function stripeTokenHandler(token: any) {
-  const paymentData = { token: token.id };
-  const userId = getUserId();
-  // Use fetch to send the token ID and any other payment data to your server.
-  // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-  const response = await api().post(`/Payment/create/`, paymentData);
+  useEffect(() => {
+    getProducs(3).then((v) => setProducs(v as IProductResponse[]));
+  }, []);
 
-  console.log(response);
-  // Return and display the result of the charge.
-  return response;
-}
+  async function stripeHandler(data: string) {
+    const dataprice = {
+      priceId: data,
+    };
 
-export default function PaymentForm() {
-  const [success, setSuccess] = useState(false);
-  const stripe = useStripe();
-  const elements = useElements();
-
-  const handleSubmit = async (event: any) => {
-    // We don't want to let default form submission happen here,
-    // which would refresh the page.
-    event.preventDefault();
-
-    if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make  sure to disable form submission until Stripe.js has loaded.
-      return;
-    }
-
-    const card = elements.getElement(CardElement);
-    const result = await stripe.createToken(card!);
-
-    if (result.error) {
-      // Show error to your customer.
-      console.log(result.error.message);
-    } else {
-      // Send the token to your server.
-      // This function does not exist yet; we will define it in the next step.
-      stripeTokenHandler(result.token);
-    }
-  };
+    getSesionId(dataprice).then((v) => setSession(v as ISesionResponse));
+  }
 
   return (
-    <>
-      {!success ? (
-        <form onSubmit={handleSubmit}>
-          <fieldset className="FormGroup">
-            <div className="FormRow">
-              <CardElement options={CARD_OPTIONS} />
-            </div>
-          </fieldset>
-          <button>Pay</button>
-        </form>
-      ) : (
-        <div>
-          <h2>Success</h2>
-        </div>
-      )}
-    </>
+    <Container>
+      <Typography align="center" className={classes.title} variant="h4">
+        Choose one Subscription
+      </Typography>
+      <Grid container spacing={3} className={classes.maincard}>
+        {producs.map((product) => (
+          <Grid item key={product.id} xs={12} sm={6} md={4}>
+            <Card className={classes.card}>
+              <CardMedia
+                className={classes.cardMedia}
+                image={product.images}
+                title={product.name}
+              />
+              <CardContent className={classes.cardContent}>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {product.name}
+                </Typography>
+                {product.description}
+              </CardContent>
+              <CardContent className={classes.cardContent}>
+                <Typography gutterBottom variant="h5" component="h2">
+                  Price: {product.defaultPrice.unitAmount / 100}$
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <IconButton
+                  color="inherit"
+                  type="submit"
+                  onClick={async () => {
+                    try {
+                      stripeHandler(product.defaultPriceId);
+                      (await props.stripe).redirectToCheckout(sesion);
+                    } catch (e) {
+                      console.log(e);
+                    }
+                  }}
+                >
+                  <PaymentIcon />
+                </IconButton>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 }

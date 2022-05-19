@@ -25,7 +25,6 @@ export interface IBookCreate {
 export interface IBookUpdate {
   id: number;
   title: string;
-  pageCount: number;
   isFree: boolean;
   imagePath: string;
   description: string;
@@ -47,7 +46,6 @@ export interface IAuthorResponse {
 
 export const bookAddSchema = Yup.object().shape({
   title: Yup.string().required('Please enter book title'),
-  pageCount: Yup.string().required('Please enter number of pages'),
   description: Yup.string().required('Please enter book description'),
   amazonLink: Yup.string().required('Please enter Link to amazon books'),
 });

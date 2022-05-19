@@ -32,6 +32,7 @@ export default function EnhancedTable(): JSX.Element {
         imagePath: '',
         description: '',
         amazonLink: '',
+        bookName: '',
       },
     ],
   });

@@ -20,6 +20,7 @@ import useStyles from './_style';
 import EditBookModal from './EditBookModal';
 import { isAdmin } from '../../Services/Auth/SessionParser';
 import DeleteBook from '../DeleteBook';
+import BookView from './BookView';
 
 export default function BooksLayout(): JSX.Element {
   const classes = useStyles();
@@ -45,6 +46,7 @@ export default function BooksLayout(): JSX.Element {
         imagePath: 'default.png',
         description: '',
         amazonLink: '',
+        bookName: '',
       },
     ],
   });
@@ -72,9 +74,9 @@ export default function BooksLayout(): JSX.Element {
           page={page + 1}
         />
       </div>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         {books.items.map((book) => (
-          <Grid item key={book.id} xs={12} sm={6} md={4}>
+          <Grid item key={book.id} xs={12} sm={3} md={4}>
             <Card className={classes.card}>
               <CardMedia
                 className={classes.cardMedia}
@@ -102,13 +104,20 @@ export default function BooksLayout(): JSX.Element {
                 </ShowMoreText>
               </CardContent>
               <CardActions>
-                <IconButton
-                  color="inherit"
-                >
-                  <PageviewIcon />
-                </IconButton>
-                {isAdmin() ? <EditBookModal curentbookid={book.id} /> : '' }
-                {isAdmin() ? <DeleteBook curentIdBook={book.id} /> : '' }
+                <BookView
+                  pageUrl={`https://localhost:7001/Resources/bookspdf/${book.bookName}`}
+                />
+                {isAdmin() ? (
+                  <EditBookModal
+                    curentbookid={book.id}
+                    title={book.title}
+                    description={book.description}
+                    amazonLink={book.amazonLink}
+                  />
+                ) : (
+                  ''
+                )}
+                {isAdmin() ? <DeleteBook curentIdBook={book.id} /> : ''}
               </CardActions>
             </Card>
           </Grid>

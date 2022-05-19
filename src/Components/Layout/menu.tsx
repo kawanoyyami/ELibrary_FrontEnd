@@ -18,19 +18,19 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Home page" />
     </ListItem>
-    <ListItem key="books" id="books" button component={Link} to="/Books">
+    <ListItem key="books" id="books" button component={Link} to="/books">
       <ListItemIcon>
         <MenuBookIcon />
       </ListItemIcon>
       <ListItemText primary="Books" />
     </ListItem>
-    <ListItem key="author" id="author" button component={Link} to="/Auhtors">
+    <ListItem key="author" id="author" button component={Link} to="/auhtors">
       <ListItemIcon>
         <LocalLibraryIcon />
       </ListItemIcon>
       <ListItemText primary="Search Authors" />
     </ListItem>
-    <ListItem key="profile" id="profile" button component={Link} to="/Profile">
+    <ListItem key="profile" id="profile" button component={Link} to="/profile">
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
@@ -42,11 +42,11 @@ export const mainListItems = (
 export const secondaryListItems = (
   <div>
     <ListSubheader inset> </ListSubheader>
-    <ListItem button component={Link} to="/Subscription">
+    <ListItem button component={Link} to="/subscription">
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Subscription" />
+      <ListItemText primary="Subscriptions" />
     </ListItem>
   </div>
 );

@@ -23,8 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    // backgroundColor: theme.palette.primary.main,
-    background: '#e55600',
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%',
@@ -32,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    background: '#e55600',
-  },
-  text: {
-    color: "#993900",
   },
 }));
 

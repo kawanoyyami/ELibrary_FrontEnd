@@ -28,6 +28,7 @@ export default function TransitionsModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [selectedFile, setSelectedFile] = React.useState(null);
+  const [selectedFileBook, setSelectedFileBook] = React.useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const [data, setData] = useState({
     title: '',
@@ -35,6 +36,7 @@ export default function TransitionsModal() {
     description: '',
     amazonLink: '',
     imagePath: '',
+    BookName: '',
   });
 
   const handleOpen = () => {
@@ -48,15 +50,17 @@ export default function TransitionsModal() {
   const setBiij = async (values) => {
     const formData = new FormData();
     formData.append('file', selectedFile);
+    formData.append('filebook', selectedFileBook);
     formData.append('title', values.title);
     formData.append('pageCount', values.pageCount);
     formData.append('description', values.description);
     formData.append('amazonLink', values.amazonLink);
     formData.append('imagePath', values.amazonLink);
+    formData.append('BookName', values.bookName);
     try {
       await addBook(formData);
     } catch (error) {
-      enqueueSnackbar(`error.toString()`, {
+      enqueueSnackbar(error.toString(), {
         variant: 'error',
       });
     }
@@ -64,6 +68,9 @@ export default function TransitionsModal() {
 
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
+  };
+  const handleFileSelectBook = (event) => {
+    setSelectedFileBook(event.target.files[0]);
   };
 
   return (
@@ -100,6 +107,7 @@ export default function TransitionsModal() {
                   description: '',
                   amazonLink: '',
                   imagePath: '',
+                  BookName: '',
                 }}
                 onSubmit={(values) => {
                   // empty
@@ -131,6 +139,8 @@ export default function TransitionsModal() {
                       margin="normal"
                       required
                       fullWidth
+                      multiline
+                      rows={4}
                       id="description"
                       label="Book Description"
                       name="description"
@@ -159,11 +169,34 @@ export default function TransitionsModal() {
                       autoComplete="amazonLink"
                     />
                     <Field
-                      component={Input}
+                      component={TextField}
+                      label="Book Cover Image"
+                      name="upload-photo"
                       type="file"
                       accept="image/*"
                       placeholder="file"
+                      fullWidth
+                      margin="normal"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      variant="outlined"
                       onChange={handleFileSelect}
+                    />
+                    <Field
+                      component={TextField}
+                      label="Book PDF"
+                      name="upload-book"
+                      type="file"
+                      accept="pdf/*"
+                      placeholder="file"
+                      fullWidth
+                      margin="normal"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      variant="outlined"
+                      onChange={handleFileSelectBook}
                     />
                     <Button
                       type="submit"

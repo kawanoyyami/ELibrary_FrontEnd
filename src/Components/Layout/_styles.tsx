@@ -5,8 +5,6 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
-    background:
-      'linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%)',
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -26,8 +24,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    background:
-      '#e55600',
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -36,8 +32,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    background:
-      '#e55600',
     
   },
   menuButton: {
@@ -65,8 +59,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    background:
-      'linear-gradient(315deg, #d7e1ec 0%, #d7e1ec 74%)',
   },
   drawerPaperClose: {
     overflowX: 'hidden',

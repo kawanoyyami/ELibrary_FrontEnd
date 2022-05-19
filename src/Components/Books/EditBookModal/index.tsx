@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -25,18 +26,16 @@ import { bookAddSchema } from '../../../Models/bookModels';
 import api from '../../../Services/axios-config';
 import { addBook, updateBook } from '../../../Services/Books';
 
-export default function EditBookModal(propss: { curentbookid: number }) {
+export default function EditBookModal(propss: {
+  curentbookid: number;
+  title: string;
+  description: string;
+  amazonLink: string;
+}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const { enqueueSnackbar } = useSnackbar();
-  const [data, setData] = useState({
-    title: '',
-    pageCount: '',
-    description: '',
-    amazonLink: '',
-    imagePath: '',
-  });
 
   const handleOpen = () => {
     setOpen(true);
@@ -73,6 +72,7 @@ export default function EditBookModal(propss: { curentbookid: number }) {
         color="inherit"
         aria-label="open drawer"
         onClick={handleOpen}
+        className={classes.submit}
       >
         <EditIcon />
       </IconButton>
@@ -91,21 +91,28 @@ export default function EditBookModal(propss: { curentbookid: number }) {
         <Fade in={open}>
           <div className={classes.paper}>
             <Typography component="h1" variant="h5" align="left" gutterBottom>
-              <Box sx={{ fontWeight: 'bold' }}>Edit Book Form</Box>
+              <Box
+                sx={{
+                  fontWeight: 'bold',
+                  marginBottom: 20,
+                  textAlign: 'center',
+                }}
+              >
+                Edit Book Form
+              </Box>
             </Typography>
-            <Container>
+            <Container className={classes.fields}>
               <Formik
                 validationSchema={bookAddSchema}
                 initialValues={{
-                  title: '',
+                  title: `${propss.title}`,
                   pageCount: '',
-                  description: '',
-                  amazonLink: '',
+                  description: `${propss.description}`,
+                  amazonLink: `${propss.amazonLink}`,
                   imagePath: '',
                 }}
                 onSubmit={(values) => {
                   // empty
-                  setData(values);
                   try {
                     setBiij(values);
                   } catch (e) {
@@ -119,7 +126,6 @@ export default function EditBookModal(propss: { curentbookid: number }) {
                   <Form onSubmit={props.handleSubmit}>
                     <Field
                       component={TextField}
-                      autoComplete="title"
                       name="title"
                       variant="outlined"
                       required
@@ -133,21 +139,12 @@ export default function EditBookModal(propss: { curentbookid: number }) {
                       margin="normal"
                       required
                       fullWidth
+                      multiline
+                      rows={5}
                       id="description"
                       label="Book Description"
                       name="description"
                       autoComplete="description"
-                    />
-                    <Field
-                      component={TextField}
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="pageCount"
-                      label="Number of pages"
-                      name="pageCount"
-                      autoComplete="pageCount"
                     />
                     <Field
                       component={TextField}
@@ -161,10 +158,18 @@ export default function EditBookModal(propss: { curentbookid: number }) {
                       autoComplete="amazonLink"
                     />
                     <Field
-                      component={Input}
+                      component={TextField}
+                      label="Book Cover Image"
+                      name="upload-photo"
                       type="file"
                       accept="image/*"
                       placeholder="file"
+                      fullWidth
+                      margin="normal"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      variant="outlined"
                       onChange={handleFileSelect}
                     />
                     <Button

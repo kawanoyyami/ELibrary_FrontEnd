@@ -16,64 +16,64 @@ export default () => [
     component: Home,
     error: 'Custom error for home page',
     meta: {
-      authOnly: true
-    }
+      authOnly: true,
+    },
   },
   {
-    path: '/SignUp',
+    path: '/signUp',
     exact: true,
     component: SignUp,
     meta: {
-      noAuth: true
-    }
+      noAuth: true,
+    },
   },
   {
-    path: '/SignIn',
+    path: '/signIn',
     exact: true,
     component: SignIn,
     meta: {
       noAuth: true,
-    }
+    },
   },
   {
-    path: '/SearchBook',
+    path: '/searchBook',
     exact: true,
     component: SearchBook,
     meta: {
       authOnly: true,
-    }
+    },
   },
   {
-    path: '/Profile',
+    path: '/profile',
     exact: true,
     component: Profile,
     meta: {
       authOnly: true,
-    }
+    },
   },
   {
-    path: '/Auhtors',
+    path: '/auhtors',
     exact: true,
     component: Authors,
     meta: {
       authOnly: true,
-    }
+    },
   },
   {
-    path: '/Books',
+    path: '/books',
     exact: true,
     component: Books,
     meta: {
       authOnly: true,
-    }
+    },
   },
   {
-    path: '/Subscription',
+    path: '/subscription',
     exact: true,
     component: Subscription,
     meta: {
       authOnly: true,
-    }
+    },
   },
   {
     path: '/*',
@@ -81,6 +81,6 @@ export default () => [
     ignoreGlobal: true,
     meta: {
       authOnly: true,
-    }
+    },
   },
 ];
