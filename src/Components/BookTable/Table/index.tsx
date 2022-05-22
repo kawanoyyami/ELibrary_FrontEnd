@@ -41,6 +41,8 @@ export default function EnhancedTable(): JSX.Element {
     getBooksPaginated({
       pageIndex: page,
       pageSize: rowsPerPage,
+      columnNameForSorting: 'id',
+      sortDirection: 'asc'
     }).then((v) => setBooks(v as IBookResponsePaginated));
   }, [rowsPerPage, page]);
 
