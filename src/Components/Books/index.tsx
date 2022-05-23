@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
@@ -10,10 +11,13 @@ import Container from '@material-ui/core/Container/Container';
 import Grid from '@material-ui/core/Grid/Grid';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect, useState } from 'react';
+import SearchIcon from '@material-ui/icons/Search';
 import ShowMoreText from 'react-show-more-text';
 import Pagination from '@material-ui/lab/Pagination';
 import IconButton from '@material-ui/core/IconButton';
 import PageviewIcon from '@material-ui/icons/Pageview';
+import InputBase from '@material-ui/core/InputBase';
+import { useDebounce } from 'use-debounce';
 import { IBookResponsePaginated } from '../../Models/bookModels';
 import { getBooksPaginated } from '../../Services/Books';
 import useStyles from './_style';
@@ -25,6 +29,8 @@ import BookView from './BookView';
 export default function BooksLayout(): JSX.Element {
   const classes = useStyles();
   const [expand, setExpand] = useState(false);
+  const [searchTitile, setSearchTitile] = useState(' ');
+  const [debounceSearchItem] = useDebounce(searchTitile, 500);
   const onClick = () => {
     setExpand(!expand);
   };
@@ -32,6 +38,10 @@ export default function BooksLayout(): JSX.Element {
   const [page, setPage] = useState(0);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1);
+  };
+
+  const handleSearch = (e) => {
+    setSearchTitile(e.target.value);
   };
 
   const [books, setBooks] = useState<IBookResponsePaginated>({
@@ -54,18 +64,42 @@ export default function BooksLayout(): JSX.Element {
   const count = Math.ceil(books.total / 9);
 
   useEffect(() => {
-    getBooksPaginated({
-      pageIndex: page,
-      pageSize: 9,
-    }).then((v) => setBooks(v as IBookResponsePaginated));
-  }, [page + 1]);
+    if (debounceSearchItem) {
+      getBooksPaginated({
+        pageIndex: page,
+        pageSize: 9,
+        columnNameForSorting: 'id',
+        sortDirection: 'asc',
+        requestFilters: {
+          filters: [{ path: 'title', value: searchTitile }],
+          logicalOperator: 0
+        }
+      }
+      ).then((v) => setBooks(v as IBookResponsePaginated));
+    }
+  }, [page + 1, debounceSearchItem]);
 
   return (
     <Container className={classes.cardGrid} maxWidth="md">
       <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
         All our Books
       </Typography>
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
+        </div>
+        <InputBase
+          placeholder="Search…"
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+          inputProps={{ 'aria-label': 'search' }}
+          onChange={handleSearch}
+        />
+      </div>
       <div className={classes.pagination}>
+
         <Pagination
           count={count}
           showFirstButton
@@ -135,3 +169,4 @@ export default function BooksLayout(): JSX.Element {
     </Container>
   );
 }
+

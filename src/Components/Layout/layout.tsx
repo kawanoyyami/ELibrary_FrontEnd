@@ -78,15 +78,6 @@ export default function Layout(props: Props): JSX.Element {
             ELibrary
           </Typography>
           <div className={classes.exitButton}>
-            <InputBase
-              className={classes.search}
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
             <Menu
               id="simple-menu"
               anchorEl={anchorEl}

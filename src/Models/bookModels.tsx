@@ -11,6 +11,9 @@ export interface IBookResponsePaginated {
 export interface IPaginatedRequest {
   pageIndex: number;
   pageSize: number;
+  columnNameForSorting: string;
+  sortDirection: string;
+  requestFilters?: { filters: [{ path: string, value: string }], logicalOperator: number };
 }
 
 export interface IBookCreate {
