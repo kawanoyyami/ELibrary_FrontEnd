@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SuccessPayment(): JSX.Element {
+export default function FailPayment(): JSX.Element {
   const classes = useStyles();
   return (
     <LibraryLayout>
@@ -34,15 +34,16 @@ export default function SuccessPayment(): JSX.Element {
             <img
               className={classes.image}
               data-v-182e9157=""
-              src="https://cdn0.iconfinder.com/data/icons/black-friday-filled-line-2/64/commerce_market_discount_card_credit_payment_success-512.png"
+              src="https://www.paidmembershipspro.com/wp-content/uploads/2017/07/Failed-Payment-Limit.png"
               alt="Payment Fail"
             />
             <p data-v-182e9157="" className={classes.text}>
-              Payment success!
+              Sorry, payment failed!
             </p>
             <p data-v-182e9157="" className={classes.textsorry}>
-              Thank you for support, now you have a premium subscription, please
-              enjoy and have a great experience with our website
+              Thank you for trying to support us, and take a membership, but
+              something went wrong, please try again or contact our
+              administrator
             </p>
           </div>
         </Paper>

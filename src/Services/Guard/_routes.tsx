@@ -2,6 +2,8 @@
 import SearchBook from '../../Pages/AllBooks';
 import Authors from '../../Pages/Authors';
 import Books from '../../Pages/Books';
+import FailPayment from '../../Pages/Checkout/Fail';
+import SuccessPayment from '../../Pages/Checkout/Success';
 import Home from '../../Pages/Home';
 import NotFound from '../../Pages/NotFound';
 import Profile from '../../Pages/Profile';
@@ -71,6 +73,22 @@ export default () => [
     path: '/subscription',
     exact: true,
     component: Subscription,
+    meta: {
+      authOnly: true,
+    },
+  },
+  {
+    path: '/failure',
+    exact: true,
+    component: FailPayment,
+    meta: {
+      authOnly: true,
+    },
+  },
+  {
+    path: '/successl',
+    exact: true,
+    component: SuccessPayment,
     meta: {
       authOnly: true,
     },

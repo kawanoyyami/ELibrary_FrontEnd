@@ -24,8 +24,8 @@ export default function DeleteBook(props: {
   curentIdBook: number;
 }): JSX.Element {
   const { enqueueSnackbar } = useSnackbar();
-  const [open, setOpen] = React.useState(false);
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);

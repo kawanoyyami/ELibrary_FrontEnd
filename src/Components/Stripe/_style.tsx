@@ -15,8 +15,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   heroContent: {
+    maxWidth: 600,
+    margin: '0 auto',
+    // padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+    padding: theme.spacing(0, 0, 2),
   },
   heroButtons: {
     marginTop: theme.spacing(4),

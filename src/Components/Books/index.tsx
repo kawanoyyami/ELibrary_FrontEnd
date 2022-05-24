@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-shadow */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-curly-brace-presence */
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -14,15 +11,21 @@ import React, { useEffect, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import ShowMoreText from 'react-show-more-text';
 import Pagination from '@material-ui/lab/Pagination';
-import IconButton from '@material-ui/core/IconButton';
-import PageviewIcon from '@material-ui/icons/Pageview';
 import InputBase from '@material-ui/core/InputBase';
 import { useDebounce } from 'use-debounce';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+import PageviewIcon from '@material-ui/icons/Pageview';
+import IconButton from '@material-ui/core/IconButton';
 import { IBookResponsePaginated } from '../../Models/bookModels';
 import { getBooksPaginated } from '../../Services/Books';
 import useStyles from './_style';
 import EditBookModal from './EditBookModal';
-import { isAdmin } from '../../Services/Auth/SessionParser';
+import {
+  isAdmin,
+  isFreeUser,
+  isPaidUser,
+} from '../../Services/Auth/SessionParser';
 import DeleteBook from '../DeleteBook';
 import BookView from './BookView';
 
@@ -34,7 +37,6 @@ export default function BooksLayout(): JSX.Element {
   const onClick = () => {
     setExpand(!expand);
   };
-
   const [page, setPage] = useState(0);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1);
@@ -42,6 +44,20 @@ export default function BooksLayout(): JSX.Element {
 
   const handleSearch = (e) => {
     setSearchTitile(e.target.value);
+  };
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
 
   const [books, setBooks] = useState<IBookResponsePaginated>({
@@ -72,10 +88,16 @@ export default function BooksLayout(): JSX.Element {
         sortDirection: 'asc',
         requestFilters: {
           filters: [{ path: 'title', value: searchTitile }],
-          logicalOperator: 0
-        }
-      }
-      ).then((v) => setBooks(v as IBookResponsePaginated));
+          logicalOperator: 0,
+        },
+      }).then((v) => setBooks(v as IBookResponsePaginated));
+    } else {
+      getBooksPaginated({
+        pageIndex: page,
+        pageSize: 9,
+        columnNameForSorting: 'id',
+        sortDirection: 'asc',
+      }).then((v) => setBooks(v as IBookResponsePaginated));
     }
   }, [page + 1, debounceSearchItem]);
 
@@ -90,6 +112,7 @@ export default function BooksLayout(): JSX.Element {
         </div>
         <InputBase
           placeholder="Search…"
+          fullWidth
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
@@ -99,7 +122,6 @@ export default function BooksLayout(): JSX.Element {
         />
       </div>
       <div className={classes.pagination}>
-
         <Pagination
           count={count}
           showFirstButton
@@ -138,9 +160,34 @@ export default function BooksLayout(): JSX.Element {
                 </ShowMoreText>
               </CardContent>
               <CardActions>
-                <BookView
-                  pageUrl={`https://localhost:7001/Resources/bookspdf/${book.bookName}`}
-                />
+                {isPaidUser() ? (
+                  <BookView
+                    pageUrl={`https://localhost:7001/Resources/bookspdf/${book.bookName}`}
+                  />
+                ) : (
+                  <div>
+                    <IconButton
+                      edge="start"
+                      color="inherit"
+                      aria-label="open drawer"
+                      onClick={handleClick}
+                      className={classes.submit}
+                    >
+                      <PageviewIcon />
+                    </IconButton>
+                    <Snackbar
+                      open={open}
+                      autoHideDuration={6000}
+                      onClose={handleClose}
+                      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    >
+                      <Alert onClose={handleClose} severity="error">
+                        You need to be subscribed!!
+                      </Alert>
+                    </Snackbar>
+                  </div>
+                )}
+
                 {isAdmin() ? (
                   <EditBookModal
                     curentbookid={book.id}
@@ -169,4 +216,3 @@ export default function BooksLayout(): JSX.Element {
     </Container>
   );
 }
-

@@ -1,7 +1,7 @@
 const userSubject = {
   currentUserSubject: {
-    value: JSON.parse(localStorage.getItem('token') || '{}')
-  }
+    value: JSON.parse(localStorage.getItem('token') || '{}'),
+  },
 };
 const userSubjectBehavior = {
   currentUserValue(): string {
@@ -14,7 +14,7 @@ const userSubjectBehavior = {
   removeUserSubject(): void {
     localStorage.removeItem('token');
     userSubject.currentUserSubject.value = null;
-  }
+  },
 };
 
 export default userSubjectBehavior;

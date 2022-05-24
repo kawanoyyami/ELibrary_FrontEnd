@@ -21,7 +21,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import useStyles from './_styles';
 import { logout } from '../../Services/Auth/Login';
 import { mainListItems, secondaryListItems } from './menu';
-import { getRoles } from '../../Services/Auth/SessionParser';
+import {
+  getRoles,
+  isAdmin,
+  isFreeUser,
+  isPaidUser,
+} from '../../Services/Auth/SessionParser';
 
 type Props = {
   children: React.ReactNode;
@@ -85,9 +90,23 @@ export default function Layout(props: Props): JSX.Element {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <Typography className={classes.menuText}>
-                User Role: {getRoles()}
-              </Typography>
+              {isPaidUser() ? (
+                <Typography className={classes.menuText}>
+                  User Role: Premium
+                </Typography>
+              ) : (
+                <Typography className={classes.menuText}>
+                  User Role: FreeUser
+                </Typography>
+              )}
+              {isAdmin() ? (
+                <Typography className={classes.menuText}>
+                  Status: Admin
+                </Typography>
+              ) : (
+                ''
+              )}
+
               <Divider />
               <MenuItem
                 onClick={() => {

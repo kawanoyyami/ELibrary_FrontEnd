@@ -1,21 +1,26 @@
-export interface IProductResponse{
-    name:string;
-    id:string;
-    description:string;
-    images:string;
-    defaultPriceId:string;
-    defaultPrice:Price;
-
+export interface IProductResponse {
+  name: string;
+  id: string;
+  description: string;
+  images: string;
+  defaultPriceId: string;
+  defaultPrice: Price;
 }
 
-interface Price{
-    unitAmount:number;
+interface Price {
+  unitAmount: number;
 }
-
-export interface IProductRequeste{
-    priceId:string;
+export interface IPortalRequest {
+  returnUrl: string;
+}
+export interface IPortalRespons {
+    url: string;
+  }
+export interface IProductRequeste {
+  priceId: string;
+  UserId: number;
 }
 
 export interface ISesionResponse {
-    sessionId: string;
-  }
+  sessionId: string;
+}
